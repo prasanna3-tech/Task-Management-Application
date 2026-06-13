@@ -83,6 +83,10 @@ function handleLogin() {
      setLoginErrors(errors);
 
     if (errors.email === "" && errors.password === "") { 
+        setLoginData({
+            email: "",
+            password: ""
+        });
         setIsAuthenticated(true); 
     }
 
@@ -161,7 +165,13 @@ if (
     errors.password === "" &&
     errors.confirmPassword === ""
 ) {
-    alert("Signup Successful!");
+   setSignupData({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+});
+setMode("login");
 }
 
 }
@@ -436,7 +446,6 @@ return (
     </>
 );
 
-   
 }
 
 export default App;
