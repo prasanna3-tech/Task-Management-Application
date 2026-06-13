@@ -74,7 +74,7 @@ function handleLogin() {
     } else if (loginData.password.length < 8) {
 
         errors.password = "Password too short";
-        console.log("less than 8")
+        
 
     }
 
@@ -87,7 +87,7 @@ function handleLogin() {
     password: errors.password !== ""
    });
 
-   console.log(showError);
+   
 
 }
 
@@ -159,7 +159,7 @@ if (
 ) {
     alert("Signup Successful!");
 }
-console.log(errors)
+
 
 }
 
@@ -320,7 +320,13 @@ console.log(errors)
             <label>Password</label>
 
          <input
-   type={showSignupPasswords ? "text" : "password"}
+      type={
+                showSignupError.password
+                    ? "text"
+                    : showSignupPasswords
+                        ? "text"
+                        : "password"
+            }
     placeholder="Enter your password"
     value={
         showSignupError.password
@@ -347,7 +353,15 @@ console.log(errors)
 
             <label >Confirm Password</label>
 <input
-    type={showSignupPasswords ? "text" : "password"}
+
+    type={
+                showSignupError.confirmPassword
+                    ? "text"
+                    : showSignupPasswords
+                        ? "text"
+                        : "password"
+            }
+
     placeholder="Confirm your password"
    value={
     showSignupError.confirmPassword
