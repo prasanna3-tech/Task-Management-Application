@@ -21,6 +21,62 @@ const [signupData, setSignupData] = useState({
     confirmPassword: ""
 });
 
+const [loginErrors, setLoginErrors] = useState({
+    email: "",
+    password: ""
+});
+
+const [showError, setShowError] = useState({
+    email: false,
+    password: false
+});
+
+function handleLogin() {
+
+    const errors = {
+        email: "",
+        password: ""
+    };
+
+    // Email Validation
+    if (loginData.email.trim() === "") {
+
+        errors.email = "Email is required";
+        console.log("email error")
+
+    } else if (!loginData.email.includes("@")) {
+
+        errors.email = "Invalid Email";
+        console.log("@ missing")
+
+    }
+
+    // Password Validation
+    if (loginData.password.trim() === "") {
+
+        errors.password = "Password is required";
+         console.log("password error")
+
+    } else if (loginData.password.length < 8) {
+
+        errors.password = "Password too short";
+        console.log("less than 8")
+
+    }
+
+    setLoginErrors(errors);
+
+   if (errors.email === "" && errors.password === "") { alert("Login Successful!"); }
+
+   setShowError({
+    email: errors.email !== "",
+    password: errors.password !== ""
+   });
+
+   console.log(showError);
+
+}
+
     return (
         <div className="container">
 
@@ -48,27 +104,53 @@ const [signupData, setSignupData] = useState({
             <input
                 type="email"
                 placeholder="Enter your email"
-                value={loginData.email}
+                value={
+                        showError.email? loginErrors.email: loginData.email
+                    }
                 onChange={(e) =>
                     setLoginData({
                     ...loginData,
                     email: e.target.value
                 })
                 }
+                onFocus={() => {
+                    if (showError.email) {
+                        setShowError({
+                            ...showError,
+                            email: false
+                        });
+                    }
+                }}
 />
 
             <label>Password</label>
 
             <input
-                type={showPassword ? "text" : "password"}
+                type={
+                showError.password
+                    ? "text"
+                    : showPassword
+                        ? "text"
+                        : "password"
+            }
                 placeholder="Enter your password"
-                value={loginData.password}
+                value={
+                     showError.password ? loginErrors.password : loginData.password
+                }
                 onChange={(e) =>
                     setLoginData({
                     ...loginData,
                     password: e.target.value
                 })
                 }
+                onFocus={() => {
+                    if (showError.password) {
+                        setShowError({
+                            ...showError,
+                            password: false
+                        });
+                    }
+                }}
             />
 
             <div className="options">
@@ -88,7 +170,7 @@ const [signupData, setSignupData] = useState({
 
             </div>
 
-            <button className="submit-btn">
+            <button className="submit-btn"  onClick={handleLogin}>
                 Login
             </button>
 
@@ -141,7 +223,7 @@ const [signupData, setSignupData] = useState({
 />
 
 
-            <label>Confirm Password</label>
+            <label >Confirm Password</label>
 <input
     type={showSignupPasswords ? "text" : "password"}
     placeholder="Confirm your password"
@@ -155,7 +237,7 @@ const [signupData, setSignupData] = useState({
    
 />
 
-<label>
+<label className="show-password-label">
     <input
         type="checkbox"
         checked={showSignupPasswords}
