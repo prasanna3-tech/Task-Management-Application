@@ -2,6 +2,8 @@ import './App.css';
 import { useState } from "react";
 
 function App() {
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [mode, setMode] = useState("login");
 
@@ -78,14 +80,16 @@ function handleLogin() {
 
     }
 
-    setLoginErrors(errors);
+     setLoginErrors(errors);
 
-   if (errors.email === "" && errors.password === "") { alert("Login Successful!"); }
+    if (errors.email === "" && errors.password === "") { 
+        setIsAuthenticated(true); 
+    }
 
-   setShowError({
-    email: errors.email !== "",
-    password: errors.password !== ""
-   });
+     setShowError({
+     email: errors.email !== "",
+     password: errors.password !== ""
+    });
 
    
 
@@ -160,11 +164,13 @@ if (
     alert("Signup Successful!");
 }
 
-
 }
 
-    return (
-        <div className="container">
+return (
+    <>
+        {!isAuthenticated ? (
+
+             <div className="container">
 
             <div className="card">
 
@@ -187,10 +193,8 @@ if (
         <>
             <label>Email</label>
 
-            <input
-                type="email"
-                placeholder="Enter your email"
-                value={
+            <input  type="email"  placeholder="Enter your email"
+                    value={
                         showError.email? loginErrors.email: loginData.email
                     }
                 onChange={(e) =>
@@ -410,7 +414,29 @@ if (
             </div>
 
         </div>
-    );
+
+        ) : (
+
+            <div className="dashboard">
+
+    <h1>Welcome to Task Manager!</h1>
+
+    <p>You have successfully logged in.</p>
+
+    <button
+        className="submit-btn"
+        onClick={() => setIsAuthenticated(false)}
+    >
+        Logout
+    </button>
+
+</div>
+
+        )}
+    </>
+);
+
+   
 }
 
 export default App;
