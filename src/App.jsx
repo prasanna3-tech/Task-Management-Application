@@ -31,6 +31,20 @@ const [showError, setShowError] = useState({
     password: false
 });
 
+const [signupErrors, setSignupErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+});
+
+const [showSignupError, setShowSignupError] = useState({
+    name: false,
+    email: false,
+    password: false,
+    confirmPassword: false
+});
+
 function handleLogin() {
 
     const errors = {
@@ -74,6 +88,78 @@ function handleLogin() {
    });
 
    console.log(showError);
+
+}
+
+function handleSignup() {
+
+    const errors = {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    };
+
+    // Name Validation
+    if (signupData.name.trim() === "") {
+
+        errors.name = "Name is required";
+
+    }
+
+    // Email Validation
+    if (signupData.email.trim() === "") {
+
+        errors.email = "Email is required";
+
+    } else if (!signupData.email.includes("@")) {
+
+        errors.email = "Invalid Email";
+
+    }
+
+    // Password Validation
+    if (signupData.password.trim() === "") {
+
+        errors.password = "Password is required";
+
+    } else if (signupData.password.length < 8) {
+
+        errors.password = "Password too short";
+
+    }
+
+    // Confirm Password Validation
+    if (signupData.confirmPassword.trim() === "") {
+
+        errors.confirmPassword = "Confirm Password is required";
+
+    } else if (
+        signupData.password !== signupData.confirmPassword
+    ) {
+
+        errors.confirmPassword = "Passwords do not match";
+
+    }
+
+    setSignupErrors(errors);
+   
+    setShowSignupError({
+    name: errors.name !== "",
+    email: errors.email !== "",
+    password: errors.password !== "",
+    confirmPassword: errors.confirmPassword !== ""
+});
+
+if (
+    errors.name === "" &&
+    errors.email === "" &&
+    errors.password === "" &&
+    errors.confirmPassword === ""
+) {
+    alert("Signup Successful!");
+}
+console.log(errors)
 
 }
 
@@ -184,13 +270,25 @@ function handleLogin() {
            <input
     type="text"
     placeholder="Enter your name"
-    value={signupData.name}
+   value={
+            showSignupError.name
+                ? signupErrors.name
+                : signupData.name
+        }
     onChange={(e) =>
         setSignupData({
             ...signupData,
             name: e.target.value
         })
     }
+    onFocus={() => {
+    if (showSignupError.name) {
+        setShowSignupError({
+            ...showSignupError,
+            name: false
+        });
+    }
+}}
 />
 
             <label>Email</label>
@@ -198,13 +296,25 @@ function handleLogin() {
             <input
     type="email"
     placeholder="Enter your email"
-    value={signupData.email}
+    value={
+        showSignupError.email
+            ? signupErrors.email
+            : signupData.email
+    }
     onChange={(e) =>
         setSignupData({
             ...signupData,
             email: e.target.value
         })
     }
+    onFocus={() => {
+    if (showSignupError.email) {
+        setShowSignupError({
+            ...showSignupError,
+            email: false
+        });
+    }
+}}
 />
 
             <label>Password</label>
@@ -212,13 +322,25 @@ function handleLogin() {
          <input
    type={showSignupPasswords ? "text" : "password"}
     placeholder="Enter your password"
-    value={signupData.password}
+    value={
+        showSignupError.password
+            ? signupErrors.password
+            : signupData.password
+    }
     onChange={(e) =>
         setSignupData({
             ...signupData,
             password: e.target.value
         })
     }
+    onFocus={() => {
+    if (showSignupError.password) {
+        setShowSignupError({
+            ...showSignupError,
+            password: false
+        });
+    }
+}}
    
 />
 
@@ -227,13 +349,25 @@ function handleLogin() {
 <input
     type={showSignupPasswords ? "text" : "password"}
     placeholder="Confirm your password"
-    value={signupData.confirmPassword}
+   value={
+    showSignupError.confirmPassword
+        ? signupErrors.confirmPassword
+        : signupData.confirmPassword
+}
     onChange={(e) =>
         setSignupData({
             ...signupData,
              confirmPassword: e.target.value
         })
     }
+    onFocus={() => {
+    if (showSignupError.confirmPassword) {
+        setShowSignupError({
+            ...showSignupError,
+            confirmPassword: false
+        });
+    }
+}}
    
 />
 
@@ -249,7 +383,7 @@ function handleLogin() {
 </label>
 
 
-            <button className="submit-btn">
+            <button className="submit-btn" onClick={handleSignup}>
                 Sign Up
             </button>
 
