@@ -2,6 +2,8 @@ import './App.css';
 import { useState } from "react";
 
 function App() {
+
+  const [users, setUsers] = useState([]);
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -82,20 +84,47 @@ function handleLogin() {
 
      setLoginErrors(errors);
 
-    if (errors.email === "" && errors.password === "") { 
-        setLoginData({
-            email: "",
-            password: ""
-        });
-        setIsAuthenticated(true); 
-    }
-
      setShowError({
      email: errors.email !== "",
      password: errors.password !== ""
     });
 
-   
+   if (
+    errors.email === "" &&
+    errors.password === ""
+) {
+
+    const matchedUser = users.find(user =>
+        user.email === loginData.email &&
+        user.password === loginData.password
+    );
+
+    if (matchedUser) {
+
+        setIsAuthenticated(true);
+
+        setLoginData({
+            email: "",
+            password: ""
+        });
+
+    } else {
+
+       setLoginErrors({
+    ...errors,
+    password: "Invalid Email or Password"
+});
+
+setShowError({
+    email: false,
+    password: true
+});
+
+    }
+
+}
+
+     
 
 }
 
@@ -165,6 +194,14 @@ if (
     errors.password === "" &&
     errors.confirmPassword === ""
 ) {
+   setUsers(previousUsers => [
+    ...previousUsers,
+    {
+        name: signupData.name,
+        email: signupData.email,
+        password: signupData.password
+    }
+]);
    setSignupData({
     name: "",
     email: "",
@@ -173,6 +210,8 @@ if (
 });
 setMode("login");
 }
+
+
 
 }
 
