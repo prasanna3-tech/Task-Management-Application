@@ -152,7 +152,7 @@
 
 .board-page {
     min-height: 100vh;
-
+    
     display: flex;
     flex-direction: column;
 
@@ -160,7 +160,9 @@
 }
 
 .top-nav {
+
     display: flex;
+
     align-items: center;
 
     gap: 16px;
@@ -182,6 +184,7 @@
     border-radius: 12px;
 
     display: flex;
+
     flex-direction: column;
 
     overflow: hidden;
@@ -308,7 +311,11 @@
         width: 100%;
     }
 
-    .board-container {
+    .board-workspace {
+        margin: 12px;
+    }
+
+    .lists-container {
         padding: 16px;
     }
 
