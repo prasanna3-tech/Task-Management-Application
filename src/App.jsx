@@ -218,6 +218,33 @@ setMode("login");
 
 }
 
+const [boards, setBoards] = useState([
+    {
+        id: 1,
+        title: "Project Task Management",
+        description: "",
+        background: ""
+    }
+]);
+
+const [selectedBoardId, setSelectedBoardId] = useState(1);
+
+const selectedBoard = boards.find(
+    board => board.id === selectedBoardId
+);
+
+const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
+
+const [createBoardData, setCreateBoardData] = useState({
+    title: "",
+    description: "",
+    background: ""
+});
+
+const [boardNameError, setBoardNameError] = useState("");
+
+//console.log(showCreateBoardModal);
+
 return (
     <>
         {!isAuthenticated ? (
@@ -483,9 +510,14 @@ return (
                     className="search-bar"
                 />
 
-                <button className="create-btn">
-                    Create
-                </button>
+            <button
+                className="create-btn"
+                onClick={() => {
+                    setShowCreateBoardModal(true);
+                }}
+                  >
+                Create
+            </button>
 
                 <button className="notification-btn">
                     🔔
@@ -503,7 +535,7 @@ return (
             <div className="board-header">
 
                 <h2>
-                    Project Task Management
+                    {selectedBoard.title}
                 </h2>
 
                 <button className="board-menu-btn">
@@ -537,6 +569,8 @@ return (
     </main>
 
         </div>
+
+        
 
         )}
     </>
