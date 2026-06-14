@@ -469,20 +469,74 @@ return (
 
         ) : (
 
-            <div className="dashboard">
+            <div className="board-page">
 
-    <h1>Welcome to Task Manager!</h1>
+            <header className="top-nav">
 
-    <p>You have successfully logged in.</p>
+                <div className="logo">
+                    Logo
+                </div>
 
-    <button
-        className="submit-btn"
-        onClick={() => setIsAuthenticated(false)}
-    >
-        Logout
-    </button>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    className="search-bar"
+                />
 
-</div>
+                <button className="create-btn">
+                    Create
+                </button>
+
+                <button className="notification-btn">
+                    🔔
+                </button>
+
+                <button className="profile-btn">
+                    👤
+                </button>
+
+            </header>
+
+
+        <main className="board-workspace">
+
+            <div className="board-header">
+
+                <h2>
+                    Project Task Management
+                </h2>
+
+                <button className="board-menu-btn">
+                    ⋯
+                </button>
+
+            </div>
+
+
+            <div className="lists-container">
+
+                <div className="list">
+                    <h3># List 1</h3>
+                </div>
+
+                <div className="list">
+                    <h3># List 2</h3>
+                </div>
+
+                <button className="add-list-btn">
+                    + Add Another List
+                </button>
+
+            </div>
+
+
+            <button className="switch-board-btn">
+                Switch Boards
+            </button>
+
+    </main>
+
+        </div>
 
         )}
     </>

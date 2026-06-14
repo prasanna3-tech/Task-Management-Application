@@ -149,3 +149,167 @@
     }
 
 }
+
+.board-page {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--background);
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 16px 24px;
+
+    border-bottom: 1px solid var(--border);
+
+    background-color: var(--card-background);
+}
+
+.board-workspace {
+    flex: 1;
+
+    margin: 16px 24px;
+
+    border: 2px solid var(--border);
+
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.board-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: var(--primary);
+}
+
+.search-bar {
+    flex: 1;
+
+    padding: 10px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    font-size: 16px;
+}
+
+.create-btn,
+.notification-btn,
+.profile-btn,
+.board-menu-btn,
+.switch-board-btn {
+    padding: 10px 16px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: var(--primary);
+
+    color: var(--button-text);
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.create-btn:hover,
+.notification-btn:hover,
+.profile-btn:hover,
+.board-menu-btn:hover,
+.switch-board-btn:hover {
+    opacity: 0.9;
+}
+
+.lists-container {
+    flex: 1;
+
+    display: flex;
+
+    gap: 16px;
+
+    overflow-x: auto;
+
+    padding: 24px;
+}
+.list {
+    min-width: 280px;
+
+    height: 180px;
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    background-color: var(--card-background);
+
+    border: 1px solid var(--border);
+
+    flex-shrink: 0;
+}
+
+.add-list-btn {
+    min-width: 280px;
+
+    height: 180px;
+
+    border: 2px dashed var(--border);
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    flex-shrink: 0;
+}
+
+.switch-board-btn {
+    align-self: center;
+
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+
+    .top-nav {
+        flex-wrap: wrap;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    .board-container {
+        padding: 16px;
+    }
+
+}
