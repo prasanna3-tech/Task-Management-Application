@@ -108,6 +108,8 @@ function handleLogin() {
             password: ""
         });
 
+        setShowPassword(false);
+
     } else {
 
        setLoginErrors({
@@ -208,6 +210,7 @@ if (
     password: "",
     confirmPassword: ""
 });
+setShowSignupPasswords(false);
 setMode("login");
 }
 
