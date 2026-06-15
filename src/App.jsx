@@ -288,6 +288,9 @@ const [boards, setBoards] = useState([
     }
 ]);
 
+const [showSwitchBoardsDropdown,
+       setShowSwitchBoardsDropdown] = useState(false);
+
 const [selectedBoardId, setSelectedBoardId] = useState(1);
 
 const selectedBoard = boards.find(
@@ -628,9 +631,52 @@ return (
             </div>
 
 
-            <button className="switch-board-btn">
+            <button
+                className="switch-board-btn"
+
+                onClick={() => {
+
+                setShowSwitchBoardsDropdown(
+                    prev => !prev
+                );
+            }}
+               >
                 Switch Boards
             </button>
+            {
+    showSwitchBoardsDropdown && (
+
+        <div className="boards-dropdown">
+
+            {
+                boards.map(board => (
+
+                    <div
+                        key={board.id}
+                        className={
+                            board.id === selectedBoardId
+                                ? "board-option active-board"
+                                : "board-option"
+                        }
+                                    >
+                <>
+                    {
+                        board.id === selectedBoardId &&
+                        "✓ "
+                    }
+
+                    {board.title}
+                </>
+
+                    </div>
+
+                ))
+            }
+
+        </div>
+
+    )
+}
 
     </main>
 

@@ -395,3 +395,33 @@
 
     color: var(--button-text);
 }
+
+.boards-dropdown {
+
+    margin-top: 8px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background-color: var(--card-background);
+
+    overflow: hidden;
+}
+
+.board-option {
+
+    padding: 12px;
+
+    cursor: pointer;
+}
+
+.board-option:hover {
+
+    background-color: var(--border);
+}
+
+.active-board {
+
+    font-weight: bold;
+}
