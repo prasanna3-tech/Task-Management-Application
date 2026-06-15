@@ -49,6 +49,8 @@ const [showSignupError, setShowSignupError] = useState({
     confirmPassword: false
 });
 
+
+
 function handleLogin() {
 
     const errors = {
@@ -310,9 +312,12 @@ const [createBoardData, setCreateBoardData] = useState({
 
 const [boardNameError, setBoardNameError] = useState("");
 
+const [showBoardMenu, setShowBoardMenu] = useState(false);
+
 //console.log(showCreateBoardModal);
 //console.log(createBoardData);
-console.log(boards)
+//console.log(boards)
+//console.log(showBoardMenu)
 
 return (
     <>
@@ -607,9 +612,41 @@ return (
                     {selectedBoard.title}
                 </h2>
 
-                <button className="board-menu-btn">
-                    ⋯
-                </button>
+    <div className="board-menu-wrapper">
+
+            <button
+                className="board-menu-btn"
+
+                onClick={() => {
+
+                    setShowBoardMenu(
+                        previous => !previous
+                    );
+
+                }}
+            >
+                ⋮
+            </button>
+
+            {
+    showBoardMenu && (
+
+        <div className="board-menu">
+
+            <button>
+                Edit Board
+            </button>
+
+            <button>
+                Delete Board
+            </button>
+
+        </div>
+
+    )
+}
+
+    </div>
 
             </div>
 
