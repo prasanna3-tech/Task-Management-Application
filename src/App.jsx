@@ -265,6 +265,20 @@ function handleCreateBoard() {
 
 }
 
+function handleCreateBoardCancel() {
+
+    setShowCreateBoardModal(false);
+
+    setCreateBoardData({
+        title: "",
+        description: "",
+        background: ""
+    });
+
+    setBoardNameError("");
+
+}
+
 const [boards, setBoards] = useState([
     {
         id: 1,
@@ -295,6 +309,7 @@ const [boardNameError, setBoardNameError] = useState("");
 
 //console.log(showCreateBoardModal);
 //console.log(createBoardData);
+console.log(boards)
 
 return (
     <>
@@ -716,9 +731,11 @@ return (
                         Create
                     </button>
 
-                    <button>
+                   <button
+                        onClick={handleCreateBoardCancel}
+                    >
                         Cancel
-                    </button>
+                   </button>
 
                 </div>
 
