@@ -218,6 +218,53 @@ setMode("login");
 
 }
 
+function handleCreateBoard() {
+
+    if (createBoardData.title.trim() === "") {
+
+        setBoardNameError("Board name is required.");
+
+        return;
+    }
+
+
+    const newBoardId = Date.now();
+
+
+    const newBoard = {
+        id: newBoardId,
+
+        title: createBoardData.title,
+
+        description: createBoardData.description,
+
+        background: createBoardData.background
+    };
+
+
+    setBoards([
+        ...boards,
+        newBoard
+    ]);
+
+
+    setSelectedBoardId(newBoardId);
+
+
+    setShowCreateBoardModal(false);
+
+
+    setCreateBoardData({
+        title: "",
+        description: "",
+        background: ""
+    });
+
+
+    setBoardNameError("");
+
+}
+
 const [boards, setBoards] = useState([
     {
         id: 1,
@@ -236,14 +283,18 @@ const selectedBoard = boards.find(
 const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
 
 const [createBoardData, setCreateBoardData] = useState({
+
     title: "",
     description: "",
     background: ""
+
 });
+
 
 const [boardNameError, setBoardNameError] = useState("");
 
 //console.log(showCreateBoardModal);
+//console.log(createBoardData);
 
 return (
     <>
@@ -568,9 +619,117 @@ return (
 
     </main>
 
+    {
+    showCreateBoardModal && (
+
+        <div className="modal-overlay">
+
+            <div className="create-board-modal">
+
+                <h2>Create Board</h2>
+
+                <label>
+                    Board Name *
+                </label>
+
+                <input
+                type="text"
+
+                placeholder="Enter board name"
+
+                value={
+                boardNameError
+                    ? boardNameError
+                    : createBoardData.title
+                 }
+
+                 onFocus={() => {
+
+                    if (boardNameError !== "") {
+                        setBoardNameError("");
+                    }
+                }}
+                 
+                onChange={(e) => {
+                    setCreateBoardData({
+                        ...createBoardData,
+                        title: e.target.value
+                    });
+                }}
+                
+                />
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    placeholder="Enter description"
+                    value={createBoardData.description}
+                    onChange={(e) => {
+                        setCreateBoardData({
+                            ...createBoardData,
+                            description: e.target.value
+                        });
+                    }}
+                />
+
+                <label>
+                    Background
+                </label>
+
+               <select
+                    value={createBoardData.background}
+                    onChange={(e) => {
+                        setCreateBoardData({
+                            ...createBoardData,
+                            background: e.target.value
+                        });
+                    }}
+                >
+    <option value="">
+        Select Background
+    </option>
+
+    <option value="Blue">
+        Blue
+    </option>
+
+    <option value="Green">
+        Green
+    </option>
+
+    <option value="Purple">
+        Purple
+    </option>
+
+    <option value="Gray">
+        Gray
+    </option>
+</select>
+
+                <div className="modal-actions">
+
+                    <button
+                         onClick={handleCreateBoard}
+                    >
+                        Create
+                    </button>
+
+                    <button>
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
 
-        
+    )
+}
+
+        </div>  
 
         )}
     </>

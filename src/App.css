@@ -320,3 +320,78 @@
     }
 
 }
+
+.modal-overlay {
+    
+    position: fixed;
+
+    inset: 0;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.create-board-modal {
+    width: 90%;
+    max-width: 450px;
+
+    background-color: var(--card-background);
+
+    border-radius: 12px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.create-board-modal input,
+.create-board-modal textarea,
+.create-board-modal select {
+    padding: 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    font-size: 16px;
+}
+
+.create-board-modal textarea {
+    resize: vertical;
+
+    min-height: 80px;
+}
+
+.modal-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 12px;
+}
+
+.modal-actions button {
+    padding: 10px 16px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background-color: var(--primary);
+
+    color: var(--button-text);
+}
