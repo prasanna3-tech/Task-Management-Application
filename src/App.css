@@ -354,6 +354,8 @@
     gap: 12px;
 }
 
+
+
 .create-board-modal input,
 .create-board-modal textarea,
 .create-board-modal select {
@@ -395,18 +397,39 @@
 
     color: var(--button-text);
 }
+.switch-board-wrapper {
 
-.boards-dropdown {
+    position: relative;
 
-    margin-top: 8px;
+    width: fit-content;
+
+    margin: 0 auto;
+}
+
+.boards-popup {
+
+    position: absolute;
+
+    left: 100%;
+
+    bottom: 0;
+
+    margin-left: 12px;
+    margin-bottom: 5px;
+
+    width: 250px;
+
+    max-height: 250px;
+
+    overflow-y: auto;
 
     border: 1px solid var(--border);
 
-    border-radius: 8px;
+    border-radius: 12px;
 
     background-color: var(--card-background);
 
-    overflow: hidden;
+    z-index: 1000;
 }
 
 .board-option {
@@ -424,4 +447,57 @@
 .active-board {
 
     font-weight: bold;
+}
+
+
+.switch-modal {
+
+    width: 400px;
+
+    background-color: var(--card-background);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 24px;
+}
+
+.board-search-input {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin: 16px 0;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+}
+
+.recent-boards-list {
+
+    max-height: 300px;
+
+    overflow-y: auto;
+
+    margin: 16px 0;
+}
+
+.recent-board {
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+}
+
+.recent-board:hover {
+
+    background-color: var(--border);
+}
+.switch-modal-actions {
+    justify-content: center;
 }

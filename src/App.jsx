@@ -288,8 +288,8 @@ const [boards, setBoards] = useState([
     }
 ]);
 
-const [showSwitchBoardsDropdown,
-       setShowSwitchBoardsDropdown] = useState(false);
+const [showSwitchBoardsModal,
+       setShowSwitchBoardsModal] = useState(false);
 
 const [selectedBoardId, setSelectedBoardId] = useState(1);
 
@@ -629,54 +629,100 @@ return (
                 </button>
 
             </div>
+            
+<div className="switch-board-wrapper">
 
+    <button
+        className="switch-board-btn"
+       onClick={() => {
+    setShowSwitchBoardsModal(true);
+}}
+    >
+        Switch Boards
+    </button>
 
-            <button
-                className="switch-board-btn"
+{
+    showSwitchBoardsModal && (
 
-                onClick={() => {
+<div className="modal-overlay">
 
-                setShowSwitchBoardsDropdown(
-                    prev => !prev
-                );
-            }}
-               >
-                Switch Boards
-            </button>
-            {
-    showSwitchBoardsDropdown && (
+            <div className="switch-modal">
 
-        <div className="boards-dropdown">
+                <h2>
+                    Switch Boards
+                </h2>
 
-            {
-                boards.map(board => (
+                <input
+                type="text"
 
-                    <div
-                        key={board.id}
-                        className={
-                            board.id === selectedBoardId
-                                ? "board-option active-board"
-                                : "board-option"
-                        }
-                                    >
-                <>
+                placeholder="Search boards..."
+
+                className="board-search-input"
+                />
+
+                <h3>
+                 Recently Created
+                </h3>
+
+    <div className="recent-boards-list">
+
+    {
+        boards
+            .slice(-10)
+            .reverse()
+            .map(board => (
+
+                <div
+                    key={board.id}
+
+                    className={
+                        board.id === selectedBoardId
+                            ? "recent-board active-board"
+                            : "recent-board"
+                    }
+                    onClick={() => {
+
+                    setSelectedBoardId(board.id);
+
+                    setShowSwitchBoardsModal(false);
+
+                    }}
+                >
+
                     {
                         board.id === selectedBoardId &&
                         "✓ "
                     }
 
                     {board.title}
-                </>
 
-                    </div>
+                </div>
 
-                ))
-            }
+            ))
+    }
+
+</div>
+
+         <div className="modal-actions switch-modal-actions">
+
+                <button
+                    onClick={() => {
+                        setShowSwitchBoardsModal(false);
+                    }}
+                >
+                    Cancel
+                </button>
+
+        </div>
+
+            </div>
 
         </div>
 
     )
 }
+
+</div>
 
     </main>
 
