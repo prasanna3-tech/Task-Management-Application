@@ -1,53 +1,234 @@
 import { useState } from "react";
 
-function BoardScreen(
+function BoardScreen() {
 
-{
+    const [deleteBoardError, setDeleteBoardError] = useState("");
 
-    boards,
-    selectedBoard,
-    selectedBoardId,
+function handleCreateBoard() {
 
-    showSwitchBoardsModal,
-    setShowSwitchBoardsModal,
+    if (createBoardData.title.trim() === "") {
 
-    showCreateBoardModal,
-    setShowCreateBoardModal,
+        setBoardNameError("Board name is required.");
 
-    showDeleteBoardModal,
-    setShowDeleteBoardModal,
+        return;
+    }
 
-    showEditBoardModal,
-    setShowEditBoardModal,
 
-    showBoardMenu,
-    setShowBoardMenu,
+    const newBoardId = Date.now();
 
-    createBoardData,
-    setCreateBoardData,
 
-    editBoardData,
-    setEditBoardData,
+    const newBoard = {
+        id: newBoardId,
 
-    boardNameError,
-    setBoardNameError,
+        title: createBoardData.title,
 
-    editBoardNameError,
-    setEditBoardNameError,
+        description: createBoardData.description,
 
-    deleteBoardError,
-    setDeleteBoardError,
+        background: createBoardData.background
+    };
 
-    handleCreateBoard,
-    handleCreateBoardCancel,
-    handleEditBoardSave,
-    handleDeleteBoard,
 
-    setSelectedBoardId
+    setBoards([
+        ...boards,
+        newBoard
+    ]);
+
+
+    setSelectedBoardId(newBoardId);
+
+
+    setShowCreateBoardModal(false);
+
+
+    setCreateBoardData({
+        title: "",
+        description: "",
+        background: ""
+    });
+
+
+    setBoardNameError("");
 
 }
 
+function handleCreateBoardCancel() {
+
+    setShowCreateBoardModal(false);
+
+    setCreateBoardData({
+        title: "",
+        description: "",
+        background: ""
+    });
+
+    setBoardNameError("");
+
+}
+
+function handleEditBoardSave() {
+
+    if (
+        editBoardData.title.trim() === ""
+    ) {
+
+        setEditBoardNameError(
+            "Board name is required"
+        );
+
+        return;
+    }
+
+    setBoards(previousBoards =>
+
+    previousBoards.map(board =>
+
+        board.id === selectedBoardId
+
+            ? {
+
+                ...board,
+
+                title: editBoardData.title,
+
+                description:
+                    editBoardData.description,
+
+                background:
+                    editBoardData.background
+
+            }
+
+            : board
+
+    )
+
+);
+
+setShowEditBoardModal(false);
+
+setEditBoardNameError("");
+
+setEditBoardData({
+
+    title: "",
+
+    description: "",
+
+    background: ""
+
+});
+
+}
+
+function handleDeleteBoard() {
+
+    if (boards.length === 1) {
+
+        setDeleteBoardError(
+            "You must have at least one board."
+        );
+
+        return;
+    }
+    const currentBoardIndex = boards.findIndex(
+
+    board =>
+
+        board.id === selectedBoardId
+
+);
+let nextSelectedBoard;
+
+if (
+    currentBoardIndex < boards.length - 1
 ) {
+
+    nextSelectedBoard =
+
+        boards[currentBoardIndex + 1];
+
+}
+else {
+
+    nextSelectedBoard =
+
+        boards[currentBoardIndex - 1];
+
+}
+
+setBoards(
+
+    previousBoards =>
+
+        previousBoards.filter(
+
+            board =>
+
+                board.id !== selectedBoardId
+
+        )
+
+);
+
+setSelectedBoardId(
+
+    nextSelectedBoard.id
+
+);
+
+setShowDeleteBoardModal(false);
+
+setDeleteBoardError("");
+
+}
+
+const [boards, setBoards] = useState([
+    {
+        id: 1,
+        title: "Project Task Management",
+        description: "",
+        background: ""
+    }
+]);
+const [showSwitchBoardsModal,
+       setShowSwitchBoardsModal] = useState(false);
+
+const [selectedBoardId, setSelectedBoardId] = useState(1);
+
+const selectedBoard = boards.find(
+    board => board.id === selectedBoardId
+);
+
+const [editBoardData, setEditBoardData] = useState({
+
+    title: "",
+
+    description: "",
+
+    background: ""
+
+});
+
+const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
+
+const [showDeleteBoardModal, setShowDeleteBoardModal] = useState(false);
+
+const [createBoardData, setCreateBoardData] = useState({
+
+    title: "",
+    description: "",
+    background: ""
+
+});
+
+const [boardNameError, setBoardNameError] = useState("");
+
+const [editBoardNameError, setEditBoardNameError] = useState("");
+
+const [showBoardMenu, setShowBoardMenu] = useState(false);
+
+const [showEditBoardModal, setShowEditBoardModal] = useState(false);
+
 
     return (
         <>
