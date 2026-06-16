@@ -281,6 +281,61 @@ function handleCreateBoardCancel() {
 
 }
 
+function handleEditBoardSave() {
+
+    if (
+        editBoardData.title.trim() === ""
+    ) {
+
+        setEditBoardNameError(
+            "Board name is required"
+        );
+
+        return;
+    }
+
+    setBoards(previousBoards =>
+
+    previousBoards.map(board =>
+
+        board.id === selectedBoardId
+
+            ? {
+
+                ...board,
+
+                title: editBoardData.title,
+
+                description:
+                    editBoardData.description,
+
+                background:
+                    editBoardData.background
+
+            }
+
+            : board
+
+    )
+
+);
+
+setShowEditBoardModal(false);
+
+setEditBoardNameError("");
+
+setEditBoardData({
+
+    title: "",
+
+    description: "",
+
+    background: ""
+
+});
+
+}
+
 const [boards, setBoards] = useState([
     {
         id: 1,
@@ -289,6 +344,7 @@ const [boards, setBoards] = useState([
         background: ""
     }
 ]);
+
 
 const [showSwitchBoardsModal,
        setShowSwitchBoardsModal] = useState(false);
@@ -299,7 +355,19 @@ const selectedBoard = boards.find(
     board => board.id === selectedBoardId
 );
 
+const [editBoardData, setEditBoardData] = useState({
+
+    title: "",
+
+    description: "",
+
+    background: ""
+
+});
+
 const [showCreateBoardModal, setShowCreateBoardModal] = useState(false);
+
+const [showDeleteBoardModal, setShowDeleteBoardModal] = useState(false);
 
 const [createBoardData, setCreateBoardData] = useState({
 
@@ -310,14 +378,20 @@ const [createBoardData, setCreateBoardData] = useState({
 });
 
 
+
 const [boardNameError, setBoardNameError] = useState("");
 
+const [editBoardNameError, setEditBoardNameError] = useState("");
+
 const [showBoardMenu, setShowBoardMenu] = useState(false);
+
+const [showEditBoardModal, setShowEditBoardModal] = useState(false);
 
 //console.log(showCreateBoardModal);
 //console.log(createBoardData);
 //console.log(boards)
 //console.log(showBoardMenu)
+console.log(editBoardData);
 
 return (
     <>
@@ -631,13 +705,39 @@ return (
             {
     showBoardMenu && (
 
-        <div className="board-menu">
+            <div className="board-menu">
 
-            <button>
+            <button
+                    onClick={ () => {
+
+                     setEditBoardData({
+
+                        title: selectedBoard.title,
+
+                        description: selectedBoard.description,
+
+                        background: selectedBoard.background
+
+                    });
+
+                    setShowBoardMenu(false);
+
+                    setShowEditBoardModal(true);
+
+                }}
+            >
                 Edit Board
             </button>
 
-            <button>
+            <button
+                onClick={() => {
+
+                    setShowBoardMenu(false);
+
+                    setShowDeleteBoardModal(true);
+
+                }}
+            >
                 Delete Board
             </button>
 
@@ -646,12 +746,13 @@ return (
     )
 }
 
+
     </div>
 
             </div>
 
 
-            <div className="lists-container">
+<div className="lists-container">
 
                 <div className="list">
                     <h3># List 1</h3>
@@ -670,12 +771,12 @@ return (
 <div className="switch-board-wrapper">
 
     <button
-        className="switch-board-btn"
-       onClick={() => {
-    setShowSwitchBoardsModal(true);
-}}
-    >
-        Switch Boards
+                className="switch-board-btn"
+            onClick={() => {
+            setShowSwitchBoardsModal(true);
+        }}
+            >
+                Switch Boards
     </button>
 
 {
@@ -865,6 +966,171 @@ return (
                     >
                         Cancel
                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    )
+}
+{
+    showEditBoardModal && (
+
+        <div className="modal-overlay">
+
+            <div className="switch-modal">
+
+                <h2>
+                    Edit Board
+                </h2>
+
+        <div className="form">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    type="text"
+
+                    value={
+                    editBoardNameError
+                        ? editBoardNameError
+                        : editBoardData.title
+                    }
+                    
+                    onFocus={() => {
+
+                    setEditBoardNameError("");
+
+                    }}
+
+                    onChange={(e) => {
+
+                        setEditBoardData({
+
+                            ...editBoardData,
+
+                            title: e.target.value
+
+                        });
+
+                    }}
+                />
+
+                <label>
+                    Description
+                </label>
+
+                <input
+                    type="text"
+
+                    value={editBoardData.description}
+
+                    onChange={(e) => {
+
+                        setEditBoardData({
+
+                            ...editBoardData,
+
+                            description: e.target.value
+
+                        });
+
+                    }}
+                />
+
+                <label>
+                    Background
+                </label>
+
+                <input
+                    type="text"
+
+                    value={editBoardData.background}
+
+                    onChange={(e) => {
+
+                        setEditBoardData({
+
+                            ...editBoardData,
+
+                            background: e.target.value
+
+                        });
+
+                    }}
+                />
+
+        </div>
+
+               <div className="modal-actions">
+
+    <button
+        onClick={() => {
+
+            setShowEditBoardModal(false);
+
+            setEditBoardNameError("");
+
+        }}
+    >
+        Cancel
+    </button>
+
+    <button
+        onClick={handleEditBoardSave}
+    >
+        Save
+    </button>
+
+</div>
+
+            </div>
+
+        </div>
+
+    )
+}
+
+{
+    showDeleteBoardModal && (
+
+        <div className="modal-overlay">
+
+            <div className="switch-modal">
+
+                <h2>
+                    Delete Board
+                </h2>
+
+                <p>
+                    Delete "
+                    {selectedBoard.title}
+                    "?
+                </p>
+
+                <p>
+                    This action cannot be undone.
+                </p>
+
+                <div className="modal-actions">
+
+                    <button
+                        onClick={() => {
+
+                            setShowDeleteBoardModal(false);
+
+                        }}
+                    >
+                        Cancel
+                    </button>
+
+                    <button>
+                        Delete
+                    </button>
 
                 </div>
 
