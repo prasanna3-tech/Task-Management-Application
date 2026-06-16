@@ -554,3 +554,10 @@
 
     background-color: var(--border);
 }
+
+.delete-error {
+
+    margin-top: 12px;
+
+    color: red;
+}

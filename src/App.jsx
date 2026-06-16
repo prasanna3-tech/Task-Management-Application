@@ -49,6 +49,8 @@ const [showSignupError, setShowSignupError] = useState({
     confirmPassword: false
 });
 
+const [deleteBoardError, setDeleteBoardError] = useState("");
+
 
 
 function handleLogin() {
@@ -333,6 +335,68 @@ setEditBoardData({
     background: ""
 
 });
+
+}
+
+function handleDeleteBoard() {
+
+    if (boards.length === 1) {
+
+        setDeleteBoardError(
+            "You must have at least one board."
+        );
+
+        return;
+    }
+    const currentBoardIndex = boards.findIndex(
+
+    board =>
+
+        board.id === selectedBoardId
+
+);
+let nextSelectedBoard;
+
+if (
+    currentBoardIndex < boards.length - 1
+) {
+
+    nextSelectedBoard =
+
+        boards[currentBoardIndex + 1];
+
+}
+else {
+
+    nextSelectedBoard =
+
+        boards[currentBoardIndex - 1];
+
+}
+
+setBoards(
+
+    previousBoards =>
+
+        previousBoards.filter(
+
+            board =>
+
+                board.id !== selectedBoardId
+
+        )
+
+);
+
+setSelectedBoardId(
+
+    nextSelectedBoard.id
+
+);
+
+setShowDeleteBoardModal(false);
+
+setDeleteBoardError("");
 
 }
 
@@ -1116,21 +1180,36 @@ return (
                     This action cannot be undone.
                 </p>
 
+                {
+                    deleteBoardError && (
+
+                        <p className="delete-error">
+
+                            {deleteBoardError}
+
+                        </p>
+
+                    )
+                }
+
                 <div className="modal-actions">
 
                     <button
                         onClick={() => {
 
                             setShowDeleteBoardModal(false);
+                            setDeleteBoardError("");
 
                         }}
                     >
                         Cancel
                     </button>
 
-                    <button>
-                        Delete
-                    </button>
+                <button
+                onClick={handleDeleteBoard}
+                  >
+                Delete
+                </button>
 
                 </div>
 
