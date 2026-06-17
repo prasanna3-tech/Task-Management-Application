@@ -717,3 +717,125 @@
     padding: 10px 16px;
 
 }
+
+.list-menu-wrapper {
+
+    position: relative;
+
+}
+
+.list-menu {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 100%;
+
+    margin-left: 8px;
+
+    width: 140px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background-color: var(--card-background);
+
+    overflow: hidden;
+
+    z-index: 1000;
+
+}
+
+.list-menu button {
+
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    background: none;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+.list-menu button:hover {
+
+    background-color: var(--border);
+
+}
+
+.list-header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+.card-count {
+
+    font-size: 14px;
+
+    color: var(--secondary-text);
+
+    min-width: 20px;
+
+    text-align: center;
+
+}
+
+.collapse-btn {
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    padding: 6px 8px;
+
+    border-radius: 6px;
+
+}
+
+.list-menu-btn {
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    padding: 6px 10px;
+
+    border-radius: 6px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+}
+.list-header button:hover {
+    background-color: #f0f0f0;
+}
+
+.list-header {
+    display: flex;
+    align-items: center;
+}
+
+.list-title {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

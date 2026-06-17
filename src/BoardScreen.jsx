@@ -15,6 +15,9 @@ const [newListTitle, setNewListTitle] =
 const [listNameError, setListNameError] =
     useState("");
 
+const [showListMenu, setShowListMenu] =
+    useState(null);
+
 function handleCreateBoard() {
 
     if (createBoardData.title.trim() === "") {
@@ -419,16 +422,16 @@ const [showEditBoardModal, setShowEditBoardModal] = useState(false);
 <div className="lists-container">
 
     {
-                selectedBoard.lists.map(list => (
+selectedBoard.lists.map(list => (
 
-  <div
-    key={list.id}
-    className="list"
->
+    <div
+        key={list.id}
+        className="list"
+    >
 
     <div className="list-header">
 
-        <h3>
+        <h3 className="list-title">
             {list.title}
         </h3>
 
@@ -442,9 +445,43 @@ const [showEditBoardModal, setShowEditBoardModal] = useState(false);
                 ↔
             </button>
 
-            <button className="list-menu-btn">
-                ⋮
-            </button>
+<div className="list-menu-wrapper">
+
+    <button
+        className="list-menu-btn"
+        
+        onClick={() => {
+
+            setShowListMenu(
+                showListMenu === list.id
+                    ? null
+                    : list.id
+            );
+
+        }}
+    >
+        ⋮
+    </button>
+
+    {
+        showListMenu === list.id && (
+
+            <div className="list-menu">
+
+                <button>
+                    Edit List
+                </button>
+
+                <button>
+                    Delete List
+                </button>
+
+            </div>
+
+        )
+    }
+
+</div>
 
         </div>
 
