@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import CreateBoardModal from "./components/CreateBoardModal";
-
 function BoardScreen() {
 
     const [deleteBoardError, setDeleteBoardError] = useState("");
@@ -459,7 +457,111 @@ const [showEditBoardModal, setShowEditBoardModal] = useState(false);
     {
     showCreateBoardModal && (
 
-        <CreateBoardModal />
+        <div className="modal-overlay">
+
+            <div className="create-board-modal">
+
+                <h2>Create Board</h2>
+
+                <label>
+                    Board Name *
+                </label>
+
+                <input
+                type="text"
+
+                placeholder="Enter board name"
+
+                value={
+                boardNameError
+                    ? boardNameError
+                    : createBoardData.title
+                 }
+
+                 onFocus={() => {
+
+                    if (boardNameError !== "") {
+                        setBoardNameError("");
+                    }
+                }}
+                 
+                onChange={(e) => {
+                    setCreateBoardData({
+                        ...createBoardData,
+                        title: e.target.value
+                    });
+                }}
+                
+                />
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    placeholder="Enter description"
+                    value={createBoardData.description}
+                    onChange={(e) => {
+                        setCreateBoardData({
+                            ...createBoardData,
+                            description: e.target.value
+                        });
+                    }}
+                />
+
+                <label>
+                    Background
+                </label>
+
+               <select
+                    value={createBoardData.background}
+                    onChange={(e) => {
+                        setCreateBoardData({
+                            ...createBoardData,
+                            background: e.target.value
+                        });
+                    }}
+                >
+    <option value="">
+        Select Background
+    </option>
+
+    <option value="Blue">
+        Blue
+    </option>
+
+    <option value="Green">
+        Green
+    </option>
+
+    <option value="Purple">
+        Purple
+    </option>
+
+    <option value="Gray">
+        Gray
+    </option>
+</select>
+
+                <div className="modal-actions">
+
+                    <button
+                         onClick={handleCreateBoard}
+                    >
+                        Create
+                    </button>
+
+                   <button
+                        onClick={handleCreateBoardCancel}
+                    >
+                        Cancel
+                   </button>
+
+                </div>
+
+            </div>
+
+        </div>
 
     )
 }
