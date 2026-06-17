@@ -2,7 +2,18 @@ import { useState } from "react";
 
 function BoardScreen() {
 
-    const [deleteBoardError, setDeleteBoardError] = useState("");
+
+
+const [deleteBoardError, setDeleteBoardError] = useState("");
+
+const [showAddListForm, setShowAddListForm] =
+    useState(false);
+
+const [newListTitle, setNewListTitle] =
+    useState("");
+
+const [listNameError, setListNameError] =
+    useState("");
 
 function handleCreateBoard() {
 
@@ -24,8 +35,11 @@ function handleCreateBoard() {
 
         description: createBoardData.description,
 
-        background: createBoardData.background
+        background: createBoardData.background,
+        lists:[]
     };
+
+    
 
 
     setBoards([
@@ -62,6 +76,63 @@ function handleCreateBoardCancel() {
     });
 
     setBoardNameError("");
+
+}
+
+function handleAddList() {
+
+    if (newListTitle.trim() === "") {
+
+        setListNameError(
+            "List title is required"
+        );
+
+        return;
+    }
+
+    const newList = {
+
+        id: Date.now(),
+
+        title: newListTitle,
+
+        cards: []
+
+    };
+
+    setBoards(
+
+        previousBoards =>
+
+            previousBoards.map(board =>
+
+                board.id === selectedBoardId
+
+                    ? {
+
+                        ...board,
+
+                        lists: [
+
+                            ...board.lists,
+
+                            newList
+
+                        ]
+
+                    }
+
+                    : board
+
+            )
+
+    );
+
+    setNewListTitle("");
+
+    setListNameError("");
+
+    setShowAddListForm(false);
 
 }
 
@@ -187,7 +258,8 @@ const [boards, setBoards] = useState([
         id: 1,
         title: "Project Task Management",
         description: "",
-        background: ""
+        background: "",
+        lists :[]
     }
 ]);
 const [showSwitchBoardsModal,
@@ -198,6 +270,8 @@ const [selectedBoardId, setSelectedBoardId] = useState(1);
 const selectedBoard = boards.find(
     board => board.id === selectedBoardId
 );
+
+//console.log(selectedBoard);
 
 const [editBoardData, setEditBoardData] = useState({
 
@@ -344,17 +418,113 @@ const [showEditBoardModal, setShowEditBoardModal] = useState(false);
 
 <div className="lists-container">
 
-                <div className="list">
-                    <h3># List 1</h3>
-                </div>
+    {
+                selectedBoard.lists.map(list => (
 
-                <div className="list">
-                    <h3># List 2</h3>
-                </div>
+  <div
+    key={list.id}
+    className="list"
+>
 
-                <button className="add-list-btn">
-                    + Add Another List
-                </button>
+    <div className="list-header">
+
+        <h3>
+            {list.title}
+        </h3>
+
+        <div className="list-header-actions">
+
+            <span className="card-count">
+                0
+            </span>
+
+            <button className="collapse-btn">
+                ↔
+            </button>
+
+            <button className="list-menu-btn">
+                ⋮
+            </button>
+
+        </div>
+
+    </div>
+
+    <div className="list-content">
+
+    </div>
+
+    <button className="add-card-btn">
+
+        + Add Card
+
+    </button>
+
+</div>
+))
+               }
+
+               {
+    !showAddListForm ? (
+
+        <button
+            className="add-list-btn"
+            onClick={() => {
+                setShowAddListForm(true);
+            }}
+        >
+            + Add Another List
+        </button>
+
+    ) : (
+
+    <div className="add-list-form">
+
+    <input
+        type="text"
+        placeholder="Enter list title..."
+        value={
+            listNameError
+                ? listNameError
+                : newListTitle
+        }
+        onChange={(e) => {
+            setNewListTitle(e.target.value);
+        }}
+        onFocus={() => {
+            setListNameError("");
+        }}
+    />
+
+    <div className="add-list-actions">
+
+        <button
+        
+        onClick={handleAddList}
+        
+        >
+            Add List
+        </button>
+
+        <button
+            onClick={() => {
+
+            setShowAddListForm(false);
+
+            setNewListTitle("");
+
+            setListNameError("");
+
+            }}
+        >
+            Cancel
+        </button>
+
+    </div>
+
+</div>
+    )
+}
 
             </div>
             

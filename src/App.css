@@ -257,16 +257,61 @@
 
     display: flex;
 
+    align-items: flex-start;
+
     gap: 16px;
 
     overflow-x: auto;
 
     padding: 24px;
 }
-.list {
-    min-width: 280px;
 
-    height: 180px;
+.list-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+.list-header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+.list-content {
+
+    flex: 1;
+
+     min-height: 80px;
+
+    overflow-y: auto;
+
+}
+
+.add-card-btn {
+
+    margin-top: auto;
+
+}
+
+.list {
+
+    flex-shrink: 0;
+
+    width: 300px;
+   
+    display: flex;
+
+    flex-direction: column;
+
+     max-height: 70vh;
 
     padding: 16px;
 
@@ -277,6 +322,16 @@
     border: 1px solid var(--border);
 
     flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+
+    .list {
+
+        width: 280px;
+
+    }
+
 }
 
 .add-list-btn {
@@ -591,4 +646,74 @@
     margin-top: 12px;
 
     color: red;
+}
+
+.add-list-form {
+
+    flex-shrink: 0;
+
+    width: 300px;
+
+    height:180px;
+
+    background-color: var(--card-background);
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+.add-list-form input {
+
+    padding: 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+}
+
+.add-list-actions {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+.add-list-actions button:first-child {
+
+    background-color: var(--primary);
+
+    color: var(--button-text);
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 10px 16px;
+
+    cursor: pointer;
+
+}
+
+.add-list-actions button:last-child {
+
+    background-color: transparent;
+
+    border: none;
+
+    cursor: pointer;
+
+    padding: 10px 16px;
+
 }
