@@ -341,7 +341,9 @@
 }
 
 .create-board-modal {
+
     width: 90%;
+
     max-width: 450px;
 
     background-color: var(--card-background);
@@ -351,9 +353,12 @@
     padding: 24px;
 
     display: flex;
+
     flex-direction: column;
 
     gap: 12px;
+
+    box-sizing: border-box;
 }
 
 
@@ -454,7 +459,9 @@
 
 .switch-modal {
 
-    width: 400px;
+    width: 90%;
+
+    max-width: 450px;
 
     background-color: var(--card-background);
 
@@ -463,6 +470,30 @@
     border-radius: 12px;
 
     padding: 24px;
+
+    box-sizing: border-box;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+}
+
+@media (max-width: 480px) {
+
+    .modal-actions {
+
+        flex-direction: column;
+
+        gap: 12px;
+
+    }
+
+    .modal-actions button {
+
+        width: 100%;
+
+    }
+
 }
 
 .board-search-input {
