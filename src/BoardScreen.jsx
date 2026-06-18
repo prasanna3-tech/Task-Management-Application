@@ -547,9 +547,63 @@ function handleDeleteList() {
 
 }
 
-console.log(selectedBoard);
+function handleToggleCard(listId, cardId) {
+
+    setBoards(
+
+        previousBoards =>
+
+            previousBoards.map(board =>
+
+                board.id === selectedBoardId
+
+                    ? {
+
+                        ...board,
+
+                        lists: board.lists.map(list =>
+
+                            list.id === listId
+
+                                ? {
+
+                                    ...list,
+
+                                    cards: list.cards.map(card =>
+
+                                        card.id === cardId
+
+                                            ? {
+
+                                                ...card,
+
+                                                completed: !card.completed
+
+                                            }
+
+                                            : card
+
+                                    )
+
+                                }
+
+                                : list
+
+                        )
+
+                    }
+
+                    : board
+
+            )
+
+    );
+
+}
 
 
+
+console.log(selectedBoard)
     return (
         <>
 
@@ -848,12 +902,29 @@ selectedBoard.lists.map(list => (
 
         list.cards.map(card => (
 
-        <div className={`card2 ${card.urgency}`}>
+        <div className={`card2 ${card.urgency} ${
+        card.completed
+            ? "completed"
+            : ""
+    }`}>
 
     <input
-        type="checkbox"
-        className="card-checkbox"
-    />
+    type="checkbox"
+
+    checked={card.completed}
+
+    onChange={() => {
+
+        handleToggleCard(
+
+            list.id,
+
+            card.id
+
+        );
+
+    }}
+/>
 
     <span className="card-title">
 
