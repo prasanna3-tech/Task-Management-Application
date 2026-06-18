@@ -848,14 +848,26 @@ selectedBoard.lists.map(list => (
 
         list.cards.map(card => (
 
-            <div
-                key={card.id}
-                className="card"
-            >
+        <div className={`card2 ${card.urgency}`}>
 
-                {card.title}
+    <input
+        type="checkbox"
+        className="card-checkbox"
+    />
 
-            </div>
+    <span className="card-title">
+
+        {card.title}
+
+    </span>
+
+    <button className="card-menu-btn">
+
+        •••
+
+    </button>
+
+</div>
 
         ))
 

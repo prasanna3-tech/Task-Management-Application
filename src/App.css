@@ -10,6 +10,10 @@
     --primary: royalblue;
 
     --button-text: white;
+
+    --high-priority:red;
+    --medium-priority:orange;
+    --low-priority:green;
 }
 
 * {
@@ -309,6 +313,8 @@
    
     display: flex;
 
+    
+
     flex-direction: column;
 
      max-height: 70vh;
@@ -322,6 +328,7 @@
     border: 1px solid var(--border);
 
     flex-shrink: 0;
+    
 }
 
 @media (max-width: 480px) {
@@ -927,7 +934,15 @@
     margin: 4px 0 0 0;
 
 }
-.card {
+.card2 {
+
+    display: flex;
+
+    align-items: center;
+
+   
+
+    gap: 8px;
 
     padding: 8px;
 
@@ -937,6 +952,165 @@
 
     margin-bottom: 8px;
 
+}
+.card2.low {
+
+    border: 2px solid var(--low-priority);
+
+}
+.card2.medium {
+
+    border: 2px solid var(--medium-priority);
+
+}
+.card2.high {
+
+    border: 2px solid var(--high-priority);
+
+}
+.card-title {
+
+    flex: 1;
+
+}
+
+
+.card-menu-btn {
+
+    opacity: 0;
+
+    transition: opacity 0.2s ease;
+
+}
+
+.card2:hover .card-menu-btn {
+
+    opacity: 1;
+
+}
+
+.card-checkbox {
+
+    width: 18px;
+
+    visibility: hidden;
+
+}
+
+.card2:hover .card-checkbox {
+
+    visibility: visible;
+
+}
+.add-card-form {
+    
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    background-color: var(--background);
+
+    margin-top: 8px;
+
+}
+.add-card-form input,
+.add-card-form textarea,
+.add-card-form select {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+
+    background-color: var(--card-background);
+
+    color: var(--text);
+
+}
+.add-card-form textarea {
+
+    resize: vertical;
+
+    min-height: 80px;
+    max-height: 120px;
+
+}
+.add-card-form input:focus,
+.add-card-form textarea:focus,
+.add-card-form select:focus {
+
+    outline: none;
+
+    border-color: var(--primary);
+
+}
+.card-form-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+.card-form-actions button:first-child {
+
+    flex: 1;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
     cursor: pointer;
 
+    background-color: var(--primary);
+
+    color: var(--button-text);
+
+}
+.card-form-actions button:last-child {
+
+    flex: 1;
+
+    padding: 10px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: none;
+
+    color: var(--text);
+
+}
+.add-card-btn{
+    background-color:transparent;
+    border:none;
+    font-weight:bold;
+    padding:5px;
+    border-radius: 8px;
+}
+.add-card-btn:hover{
+    background-color:lightgray;
+}
+
+.list-content{
+    margin-bottom:14px;
+    margin-top:12px;
 }
