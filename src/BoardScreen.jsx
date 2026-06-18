@@ -18,6 +18,16 @@ const [listNameError, setListNameError] =
 const [showListMenu, setShowListMenu] =
     useState(null);
 
+const [editingListId, setEditingListId] =
+    useState(null);
+
+const [editListTitle, setEditListTitle] =
+    useState("");
+
+const [editListError, setEditListError] =
+    useState("");
+
+
 function handleCreateBoard() {
 
     if (createBoardData.title.trim() === "") {
@@ -307,6 +317,60 @@ const [showBoardMenu, setShowBoardMenu] = useState(false);
 const [showEditBoardModal, setShowEditBoardModal] = useState(false);
 
 
+function handleEditListSave() {
+
+   if (editListTitle.trim() === "") {
+
+    setEditListError(
+        "List title is required"
+    );
+
+    return;
+}
+
+    setBoards(
+
+        previousBoards =>
+
+            previousBoards.map(board =>
+
+                board.id === selectedBoardId
+
+                    ? {
+
+                        ...board,
+
+                        lists: board.lists.map(list =>
+
+                            list.id === editingListId
+
+                                ? {
+
+                                    ...list,
+
+                                    title: editListTitle
+
+                                }
+
+                                : list
+
+                        )
+
+                    }
+
+                    : board
+
+            )
+
+    );
+
+    setEditingListId(null);
+
+    setEditListTitle("");
+
+}
+
+
     return (
         <>
 
@@ -429,7 +493,58 @@ selectedBoard.lists.map(list => (
         className="list"
     >
 
-    <div className="list-header">
+    {
+    editingListId === list.id ? (
+
+        <div className="edit-list-header">
+
+            <input
+                type="text"
+
+                value={
+        editListError
+            ? editListError
+            : editListTitle
+    }
+
+                onChange={(e) => {
+
+                    setEditListTitle(
+                        e.target.value
+                    );
+
+                }}
+
+                onFocus={() => {
+
+                 setEditListError("");
+
+            }}
+            />
+
+             <button
+                onClick={handleEditListSave}
+             >
+                    ✓
+            </button>
+
+            <button
+                onClick={() => {
+
+                    setEditingListId(null);
+                    setEditListTitle("");
+                    setEditListError("");
+
+                }}
+            >
+                ✕
+            </button>
+
+        </div>
+
+    ) : (
+
+        <div className="list-header">
 
         <h3 className="list-title">
             {list.title}
@@ -460,7 +575,7 @@ selectedBoard.lists.map(list => (
 
         }}
     >
-        ⋮
+       •••
     </button>
 
     {
@@ -468,7 +583,21 @@ selectedBoard.lists.map(list => (
 
             <div className="list-menu">
 
-                <button>
+                <button
+                    onClick={() => {
+
+                        setEditingListId(
+                            list.id
+                        );
+
+                        setEditListTitle(
+                            list.title
+                        );
+
+                        setShowListMenu(null);
+
+                    }}
+                >
                     Edit List
                 </button>
 
@@ -481,11 +610,16 @@ selectedBoard.lists.map(list => (
         )
     }
 
-</div>
+            </div>
 
         </div>
 
     </div>
+
+    )
+}
+
+   
 
     <div className="list-content">
 

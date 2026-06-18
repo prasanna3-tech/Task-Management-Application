@@ -839,3 +839,54 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.edit-list-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+}
+.edit-list-header input {
+
+     width: 180px;
+
+    min-width: 0;
+
+    padding: 8px 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    background-color: var(--card-background);
+
+    color: var(--text);
+
+}
+.edit-list-header button {
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    padding: 6px 8px;
+
+    border-radius: 6px;
+
+    font-size: 16px;
+
+}
+.edit-list-header button:hover {
+
+    background-color:  var(--border);
+
+}
