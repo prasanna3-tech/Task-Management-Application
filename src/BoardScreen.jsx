@@ -30,6 +30,144 @@ const [editListError, setEditListError] =
 const [deleteListId, setDeleteListId] =
     useState(null);
 
+const [showAddCardFormId, setShowAddCardFormId] =
+    useState(null);
+
+const [cardData, setCardData] = useState({
+
+    title: "",
+
+    description: "",
+
+    dueDate: "",
+
+    urgency: ""
+
+});
+
+const [cardErrors, setCardErrors] = useState({
+
+    title: "",
+
+    urgency: ""
+
+});
+
+
+
+function handleAddCard(listId) {
+
+
+        const errors = {
+
+        title: "",
+
+        urgency: ""
+
+    };
+
+    if (cardData.title.trim() === "") {
+
+        errors.title = "Card name is required";
+
+    }
+
+    if (cardData.urgency === "") {
+
+        errors.urgency = "Select urgency";
+
+    }
+
+    setCardErrors(errors);
+
+    if (
+
+        errors.title !== "" ||
+
+        errors.urgency !== ""
+
+    ) {
+
+        return;
+
+    }
+
+    const newCard = {
+
+        id: Date.now(),
+
+        title: cardData.title,
+
+        description: cardData.description,
+
+        dueDate: cardData.dueDate,
+
+        urgency: cardData.urgency,
+
+        completed: false
+
+    };
+
+    setBoards(
+
+        previousBoards =>
+
+            previousBoards.map(board =>
+
+                board.id === selectedBoardId
+
+                    ? {
+
+                        ...board,
+
+                        lists:
+
+                            board.lists.map(list =>
+
+                                list.id === listId
+
+                                    ? {
+
+                                        ...list,
+
+                                        cards: [
+
+                                            ...list.cards,
+
+                                            newCard
+
+                                        ]
+
+                                    }
+
+                                    : list
+
+                            )
+
+                    }
+
+                    : board
+
+            )
+
+    );
+
+    setCardData({
+
+        title: "",
+
+        description: "",
+
+        dueDate: "",
+
+        urgency: ""
+
+    });
+
+    setShowAddCardFormId(null);
+
+}
+
 
 function handleCreateBoard() {
 
@@ -409,6 +547,8 @@ function handleDeleteList() {
 
 }
 
+console.log(selectedBoard);
+
 
     return (
         <>
@@ -704,14 +844,211 @@ selectedBoard.lists.map(list => (
         <>
 
             <div className="list-content">
+                 {
+
+        list.cards.map(card => (
+
+            <div
+                key={card.id}
+                className="card"
+            >
+
+                {card.title}
 
             </div>
 
-            <button className="add-card-btn">
+        ))
 
-                + Add Card
+    }
+            </div>
 
+{
+    showAddCardFormId === list.id ? (
+
+        <div className="add-card-form">
+
+            <input
+                type="text"
+                placeholder="Card Name"
+
+                value={
+                  cardErrors.title
+                    ? cardErrors.title
+                    : cardData.title
+                }
+                
+                onFocus={() => {
+
+                    if (cardErrors.title) {
+
+                        setCardErrors({
+
+                            ...cardErrors,
+
+                            title: ""
+
+                        });
+
+                    }
+
+                }}
+
+                onChange={(e) => {
+
+                    setCardData({
+
+                        ...cardData,
+
+                        title: e.target.value
+
+                    });
+
+                }}
+            />
+
+        <textarea
+            placeholder="Description"
+            value={cardData.description}
+            onChange={(e) => {
+
+                setCardData({
+
+                    ...cardData,
+
+                    description: e.target.value
+
+                });
+
+            }}
+        />
+
+            <input
+    type="date"
+    value={cardData.dueDate}
+    onChange={(e) => {
+
+        setCardData({
+
+            ...cardData,
+
+            dueDate: e.target.value
+
+        });
+
+    }}
+/>
+
+           <select
+    value={cardData.urgency}
+    onChange={(e) => {
+
+        setCardData({
+
+            ...cardData,
+
+            urgency: e.target.value
+
+        });
+        
+         if (cardErrors.urgency) {
+
+            setCardErrors({
+
+                ...cardErrors,
+
+                urgency: ""
+
+            });
+
+        }
+
+
+
+    }}
+>
+
+    <option value="">
+        Select Urgency
+    </option>
+
+    <option value="high">
+        High
+    </option>
+
+    <option value="medium">
+        Medium
+    </option>
+
+    <option value="low">
+        Low
+    </option>
+
+</select>
+
+{
+    cardErrors.urgency && (
+
+        <p className="card-error">
+
+            {cardErrors.urgency}
+
+        </p>
+
+    )
+}
+
+            <div className="card-form-actions">
+
+            <button
+                onClick={() => {
+
+                    handleAddCard(list.id);
+
+                }}
+             >
+                Add
             </button>
+
+                <button
+                    onClick={() => {
+
+                        setShowAddCardFormId(null);
+                         setCardData({
+
+                            title: "",
+
+                            description: "",
+
+                            dueDate: "",
+
+                            urgency: ""
+
+                        });
+
+                    }}
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    ) : (
+
+        <button
+            className="add-card-btn"
+            onClick={() => {
+
+                setShowAddCardFormId(list.id);
+
+            }}
+        >
+            + Add Card
+        </button>
+
+    )
+}
 
         </>
 
