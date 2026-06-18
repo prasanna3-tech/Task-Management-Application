@@ -890,3 +890,30 @@
     background-color:  var(--border);
 
 }
+
+.delete-list-confirmation {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 16px;
+
+}
+.delete-list-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+.delete-list-actions button {
+
+    flex: 1;
+
+}

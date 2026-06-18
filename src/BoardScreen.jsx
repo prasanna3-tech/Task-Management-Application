@@ -27,6 +27,9 @@ const [editListTitle, setEditListTitle] =
 const [editListError, setEditListError] =
     useState("");
 
+const [deleteListId, setDeleteListId] =
+    useState(null);
+
 
 function handleCreateBoard() {
 
@@ -370,6 +373,42 @@ function handleEditListSave() {
 
 }
 
+function handleDeleteList() {
+
+    setBoards(
+
+        previousBoards =>
+
+            previousBoards.map(board =>
+
+                board.id === selectedBoardId
+
+                    ? {
+
+                        ...board,
+
+                        lists:
+
+                            board.lists.filter(
+
+                                currentList =>
+
+                                    currentList.id !== deleteListId
+
+                            )
+
+                    }
+
+                    : board
+
+            )
+
+    );
+
+    setDeleteListId(null);
+
+}
+
 
     return (
         <>
@@ -601,8 +640,16 @@ selectedBoard.lists.map(list => (
                     Edit List
                 </button>
 
-                <button>
-                    Delete List
+                <button
+                        onClick={() => {
+
+                            setDeleteListId(list.id);
+
+                            setShowListMenu(null);
+
+                        }}
+                    >
+                      Delete List
                 </button>
 
             </div>
@@ -621,15 +668,55 @@ selectedBoard.lists.map(list => (
 
    
 
-    <div className="list-content">
+   {
+    deleteListId === list.id ? (
 
-    </div>
+        <div className="delete-list-confirmation">
 
-    <button className="add-card-btn">
+            <p>
+                Delete "{list.title}"?
+            </p>
 
-        + Add Card
+            <div className="delete-list-actions">
 
-    </button>
+           <button
+                onClick={handleDeleteList}
+             >
+                Delete
+            </button>
+
+                <button
+                    onClick={() => {
+
+                        setDeleteListId(null);
+
+                    }}
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    ) : (
+
+        <>
+
+            <div className="list-content">
+
+            </div>
+
+            <button className="add-card-btn">
+
+                + Add Card
+
+            </button>
+
+        </>
+
+    )
+}
 
 </div>
 ))
