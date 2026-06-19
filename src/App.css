@@ -297,6 +297,13 @@
 
     overflow-y: auto;
 
+    scrollbar-width: none;
+
+}
+.list-content::-webkit-scrollbar {
+
+    display: none; /* Chrome, Edge, Safari */
+
 }
 
 .add-card-btn {
@@ -312,8 +319,6 @@
     width: 300px;
    
     display: flex;
-
-    
 
     flex-direction: column;
 
@@ -1111,6 +1116,67 @@
 }
 
 .list-content{
-    margin-bottom:14px;
+   
     margin-top:12px;
+    overflow-y:auto;
+}
+.card-menu-wrapper {
+
+    position: relative;
+
+}
+.card-menu-btn {
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    padding: 4px 8px;
+
+    border-radius: 6px;
+
+}
+.card-menu {
+
+    position: absolute;
+
+    top: 100%;
+
+    right: 0;
+    margin-left: 8px;
+
+    width: 120px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background-color: var(--card-background);
+
+    z-index: 2000;
+
+    overflow: hidden;
+
+}
+.card-menu button {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+
+    background: none;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+.card-menu button:hover {
+
+    background-color: var(--border);
+
 }
