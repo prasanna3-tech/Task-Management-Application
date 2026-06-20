@@ -81,6 +81,16 @@ const [editCardErrors, setEditCardErrors] =
 
     });
 
+const [editingListIdForCard, setEditingListIdForCard] =
+    useState(null);
+
+
+const [deletingCardId, setDeletingCardId] =
+    useState(null);
+
+const [deleteListIdForCard, setDeleteListIdForCard] =
+    useState(null);
+
 
 function handleEditCardSave() {
 
@@ -132,7 +142,7 @@ function handleEditCardSave() {
 
                         lists: board.lists.map(list =>
 
-                            list.id === editingListId
+                            list.id === editingListIdForCard
 
                                 ? {
 
@@ -176,7 +186,7 @@ function handleEditCardSave() {
 
     setEditingCardId(null);
 
-    setEditingListId(null);
+    setEditingListIdForCard(null);
 
     setEditCardErrors({
 
@@ -197,6 +207,52 @@ function handleEditCardSave() {
         urgency: ""
 
     });
+}
+
+function handleDeleteCard() {
+
+    setBoards(
+
+        previousBoards =>
+
+            previousBoards.map(board =>
+
+                board.id === selectedBoardId
+
+                    ? {
+
+                        ...board,
+
+                        lists: board.lists.map(list =>
+
+                            list.id === deleteListIdForCard
+
+                                ? {
+
+                                    ...list,
+
+                                    cards: list.cards.filter(card =>
+
+                                        card.id !== deletingCardId
+
+                                    )
+
+                                }
+
+                                : list
+
+                        )
+
+                    }
+
+                    : board
+
+            )
+
+    );
+
+    setDeletingCardId(null);
+
 }
 
 
@@ -1042,7 +1098,7 @@ selectedBoard.lists.map(list => (
 
         <>
 
-            <div className="list-content">
+    <div className="list-content">
                  {
 
         list.cards.map(card => (
@@ -1055,7 +1111,7 @@ selectedBoard.lists.map(list => (
 
     <input
     type="checkbox"
-
+     className="card-checkbox"
     checked={card.completed}
 
     onChange={() => {
@@ -1079,7 +1135,36 @@ selectedBoard.lists.map(list => (
 
 <div className="card-menu-wrapper">
 
-    <button
+
+    {
+
+        deletingCardId === card.id ? (
+
+            <>
+
+                <button
+                    className="card-action-btn"
+                    onClick={handleDeleteCard}
+                >
+                    ✓
+                </button>
+
+                <button
+                    className="card-action-btn"
+                    onClick={() => {
+
+                        setDeletingCardId(null);
+
+                    }}
+                >
+                    ✕
+                </button>
+
+            </>
+
+        ) : (
+
+           <button
         className="card-menu-btn"
         onClick={() => {
 
@@ -1098,6 +1183,10 @@ selectedBoard.lists.map(list => (
         •••
     </button>
 
+        )
+
+    }
+
     {
         showCardMenu === card.id && (
 
@@ -1107,7 +1196,7 @@ selectedBoard.lists.map(list => (
     onClick={() => {
 
         setEditingCardId(card.id);
-        setEditingListId(list.id);
+        setEditingListIdForCard(list.id);
 
         setEditCardData({
 
@@ -1143,9 +1232,18 @@ selectedBoard.lists.map(list => (
 
 </button>
 
-                <button>
+                <button
+                  onClick={() => {
 
-                    Delete Card
+                    setDeletingCardId(card.id);
+                    setDeleteListIdForCard(list.id)
+
+                    setShowCardMenu(null);
+
+                        }}
+                    >
+
+                        Delete Card
 
                 </button>
 
@@ -1165,7 +1263,7 @@ selectedBoard.lists.map(list => (
 
 
 {
-    editingCardId !== null && editingListId === list.id ? (
+    editingCardId !== null && editingListIdForCard === list.id ? (
 
         <div className="add-card-form">
 
